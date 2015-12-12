@@ -1,3 +1,3 @@
 PITS - Pi Temperature Server
 
-Simple REST server for exposing temperature data
+Simple server exposing a REST API for retrieving temperature data
