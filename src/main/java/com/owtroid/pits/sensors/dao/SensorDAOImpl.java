@@ -27,9 +27,10 @@ import java.util.List;
  * @author Torgny Johansson
  */
 public class SensorDAOImpl implements SensorDAO {
+    private static String SENSORS_PATH = "/sys/bus/w1/devices/";
     @Override
     public List<Sensor> getSensors() {
-        File sensorsDir = new File("/sys/bus/w1/devices/");
+        File sensorsDir = new File(SENSORS_PATH);
         File[] sensorFiles = sensorsDir.listFiles();
         List<Sensor> sensors = new ArrayList<>();
         /* TODO: get all sensors and values */
@@ -39,6 +40,12 @@ public class SensorDAOImpl implements SensorDAO {
     @Override
     public Sensor getSensor(String name) {
         /* TODO: get sensor by name */
+        return null;
+    }
+    
+    private Sensor getSensorFromFile(File file) {
+        File[] sensorFiles = file.listFiles();
+        /* TODO get the sensor */
         return null;
     }
 }
