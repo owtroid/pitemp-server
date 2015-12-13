@@ -17,8 +17,10 @@
 
 package com.owtroid.pits.sensors;
 
+import com.owtroid.pits.sensors.dao.SensorDAO;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,11 +32,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class SensorController {
+
+    private final SensorDAO sensorDAO;
+    
+    @Autowired
+    public SensorController(SensorDAO sensorDAO) {
+        this.sensorDAO = sensorDAO;
+    }
     
     @RequestMapping(value="/sensors", method=RequestMethod.GET)
     public List<Sensor> getSensors() {
+        return sensorDAO.getSensors();
+        /*
         List<Sensor> sensors = new ArrayList<>();
-        sensors.add(new Sensor() {
+        sensors.add(new Sensor<Double>() {
             @Override
             public String getId() {
                 return "1";
@@ -49,14 +60,20 @@ public class SensorController {
             public String getName() {
                 return "1";
             }
+
+            @Override
+            public Double getValue() {
+                return new Double(0);
+            }
         });
         
         return sensors;
+    */
     }
     
     @RequestMapping("/sensors/{id}")
     public Sensor getSensor(@PathVariable("id") String id) {
-        return new Sensor() {
+        return new Sensor<Double>() {
             @Override
             public String getId() {
                 return id;
@@ -70,6 +87,11 @@ public class SensorController {
             @Override
             public String getName() {
                 return id;
+            }
+
+            @Override
+            public Double getValue() {
+                return new Double(0);
             }
         };
     }

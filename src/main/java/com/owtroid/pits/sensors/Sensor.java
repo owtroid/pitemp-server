@@ -21,11 +21,13 @@ package com.owtroid.pits.sensors;
  *
  * @author Torgny Johansson
  */
-public interface Sensor {
+public interface Sensor<T> {
     
     public String getId();
     
     public String getDescription();
     
     public String getName();
+    
+    public T getValue();
 }

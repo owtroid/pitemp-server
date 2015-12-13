@@ -17,13 +17,10 @@
 
 package com.owtroid.pits;
 
-import com.owtroid.pits.sensors.SensorController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = SensorController.class)
 public class PitsApplication {
 
     public static void main(String[] args) {
