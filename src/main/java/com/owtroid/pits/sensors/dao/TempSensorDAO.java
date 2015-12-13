@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author Torgny Johansson
+ * @author Torgny Johansson <owtroid@gmail.com>
  */
 @Component
 public class TempSensorDAO implements SensorDAO {

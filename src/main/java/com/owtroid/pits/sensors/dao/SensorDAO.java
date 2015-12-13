@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  *
- * @author Torgny Johansson
+ * @author Torgny Johansson <owtroid@gmail.com>
  */
 public interface SensorDAO {
     public List<Sensor> getSensors();

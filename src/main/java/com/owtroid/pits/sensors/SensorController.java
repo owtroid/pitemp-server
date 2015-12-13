@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Torgny Johansson
+ * @author Torgny Johansson <owtroid@gmail.com>
  */
 @RestController
 public class SensorController {

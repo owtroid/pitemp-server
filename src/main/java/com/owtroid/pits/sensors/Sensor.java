@@ -19,7 +19,7 @@ package com.owtroid.pits.sensors;
 
 /**
  *
- * @author Torgny Johansson
+ * @author Torgny Johansson <owtroid@gmail.com>
  */
 public interface Sensor<T> {
     
