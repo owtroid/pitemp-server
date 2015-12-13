@@ -92,7 +92,7 @@ public class TempSensorDAO implements SensorDAO {
             line = reader.readLine();
             int idx = line.indexOf("t=");
             String tempStr = line.substring(idx+2, line.length());
-            return Double.parseDouble(tempStr);
+            return Double.parseDouble(tempStr) / 1000;
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;
