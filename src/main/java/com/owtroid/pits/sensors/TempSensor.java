@@ -18,7 +18,7 @@ package com.owtroid.pits.sensors;
 
 /**
  *
- * @author torgny
+ * @author Torgny Johansson
  */
 public class TempSensor implements Sensor<Double> {
 
