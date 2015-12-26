@@ -14,7 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.owtroid.pits.sensors;
+package com.owtroid.pits.sensors.tempsensors;
+
+import com.owtroid.pits.sensors.Sensor;
+import com.owtroid.pits.sensors.SensorValue;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -22,14 +27,15 @@ package com.owtroid.pits.sensors;
  */
 public class TempSensor implements Sensor<Double> {
 
-    private Double value;
+    private List<SensorValue<Double>> values;
     private String id, description, name;
     
-    public TempSensor(String id, String name, String description, Double value) {
+    public TempSensor(String id, String name, String description, SensorValue<Double> value) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.value = value;
+        values = new ArrayList<>();
+        values.add(value);
     }
     
     @Override
@@ -48,15 +54,15 @@ public class TempSensor implements Sensor<Double> {
     }
 
     @Override
-    public Double getValue() {
-        return value;
+    public SensorValue<Double> getLastValue() {
+        return values.get(values.size()-1);
     }
 
     /**
      * @param value the value to set
      */
-    public void setValue(Double value) {
-        this.value = value;
+    public void addValue(SensorValue<Double> value) {
+        values.add(value);
     }
 
     /**
@@ -78,6 +84,11 @@ public class TempSensor implements Sensor<Double> {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public List<SensorValue<Double>> getValues() {
+        return values;
     }
     
 }

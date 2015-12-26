@@ -18,7 +18,7 @@
 package com.owtroid.pits.sensors;
 
 import com.owtroid.pits.sensors.dao.SensorDAO;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -90,8 +90,13 @@ public class SensorController {
             }
 
             @Override
-            public Double getValue() {
-                return new Double(0);
+            public SensorValue<Double> getLastValue() {
+                return new SensorValue<>((double) 0, new Date());
+            }
+
+            @Override
+            public List<SensorValue<Double>> getValues() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
     }

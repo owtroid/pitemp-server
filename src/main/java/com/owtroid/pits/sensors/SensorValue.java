@@ -14,25 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package com.owtroid.pits.sensors;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  *
  * @author Torgny Johansson <owtroid@gmail.com>
  * @param <T>
  */
-public interface Sensor<T> {
+public class SensorValue<T> {
     
-    public String getId();
+    private T value;
+    private Date timestamp;
     
-    public String getDescription();
+    public SensorValue(T value, Date timestamp) {
+        this.value = value;
+        this.timestamp = timestamp;
+    }
     
-    public String getName();
+    public T getValue() {
+        return value;
+    }
     
-    public SensorValue<T> getLastValue();
+    public Date getTimestamp() {
+        return timestamp;
+    }
     
-    public List<SensorValue<T>> getValues();
+    public void setValue(T value) {
+        this.value = value;
+    }
+    
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
 }

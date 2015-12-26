@@ -15,15 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.owtroid.pits.sensors.dao;
+package com.owtroid.pits.sensors.tempsensors.dao;
 
 import com.owtroid.pits.sensors.Sensor;
-import com.owtroid.pits.sensors.TempSensor;
+import com.owtroid.pits.sensors.SensorValue;
+import com.owtroid.pits.sensors.dao.SensorDAO;
+import com.owtroid.pits.sensors.tempsensors.TempSensor;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
@@ -73,7 +76,7 @@ public class TempSensorDAO implements SensorDAO {
         String name = readNameFile(nameFile);
         
         if (value != null && name != null) {
-            return new TempSensor(name, name, "", value);
+            return new TempSensor(name, name, "", new SensorValue<>(value, new Date()));
         } else {
             return null;
         }
