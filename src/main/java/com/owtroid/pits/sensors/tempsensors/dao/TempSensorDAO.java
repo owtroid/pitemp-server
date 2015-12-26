@@ -64,7 +64,7 @@ public class TempSensorDAO implements SensorDAO {
             public void run() {
                 getSensorReadings();
             }
-        }, 0, 60000);
+        }, 0, 5*60*1000);
     }
     
     private void getSensorReadings() {
