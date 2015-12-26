@@ -35,4 +35,6 @@ public interface Sensor<T> {
     public SensorValue<T> getLastValue();
     
     public List<SensorValue<T>> getValues();
+    
+    public void addValue(SensorValue<T> value);
 }

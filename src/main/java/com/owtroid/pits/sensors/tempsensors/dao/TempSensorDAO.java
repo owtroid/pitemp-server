@@ -27,7 +27,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,84 +40,41 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class TempSensorDAO implements SensorDAO {
-    private static String SENSORS_PATH = "/sys/bus/w1/devices/";
+    private Map<String, Sensor> sensors;
+    
+    public TempSensorDAO() {
+        sensors = new HashMap<>();
+        setupSensorReader();
+    }
+    
     @Override
     public List<Sensor> getSensors() {
-        File sensorsDir = new File(SENSORS_PATH);
-        File[] sensorDirs = sensorsDir.listFiles();
-        List<Sensor> sensors = new ArrayList<>();
-        
-        for (File sensorDir : sensorDirs) {
-            Sensor sensor = getSensorFromFile(sensorDir);
-            if (sensor != null) {
-                sensors.add(sensor);
-            }
-        }
-        return sensors;
+        return new ArrayList(sensors.values());
     }
 
     @Override
-    public Sensor getSensor(String name) {
-        /* TODO: get sensor by name */
-        return null;
+    public Sensor getSensor(String id) {
+        return sensors.get(id);
     }
     
-    private Sensor getSensorFromFile(File sensor) {
-        File[] sensorFiles = sensor.listFiles();
-        File nameFile = null;
-        File valueFile = null;
-        for (File sensorFile : sensorFiles) {
-            if (sensorFile.getName().equals("w1_slave")) {
-                valueFile = sensorFile;
-                continue;
+    private void setupSensorReader() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                getSensorReadings();
             }
-            if (sensorFile.getName().equals("name")) {
-                nameFile = sensorFile;
+        }, 0, 60000);
+    }
+    
+    private void getSensorReadings() {
+        SensorReader sensorReader = new SensorReader();
+        for (Sensor sensor : sensorReader.getSensors()) {
+            if (sensors.containsKey(sensor.getId())) {
+                sensors.get(sensor.getId()).addValue(sensor.getLastValue());
+            } else {
+                sensors.put(sensor.getId(), sensor);
             }
-        }
-        
-        Double value = readValueFile(valueFile);
-        String name = readNameFile(nameFile);
-        
-        if (value != null && name != null) {
-            return new TempSensor(name, name, "", new SensorValue<>(value, new Date()));
-        } else {
-            return null;
-        }
-    }
-    
-    private Double readValueFile(File valueFile) {
-        if (valueFile == null) {
-            return null;
-        }
-        
-        try (BufferedReader reader = new BufferedReader(new FileReader(valueFile))) {
-            String line;
-            // discard first line
-            reader.readLine();
-            // now read temp info
-            line = reader.readLine();
-            int idx = line.indexOf("t=");
-            String tempStr = line.substring(idx+2, line.length());
-            return Double.parseDouble(tempStr) / 1000;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-    
-    private String readNameFile(File nameFile) {
-        if (nameFile == null) {
-            return null;
-        }
-        
-        try (BufferedReader reader = new BufferedReader(new FileReader(nameFile))) {
-            String line;
-            line = reader.readLine();
-            return line.trim();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
         }
     }
 }

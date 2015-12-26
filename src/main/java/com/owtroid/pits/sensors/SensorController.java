@@ -98,6 +98,11 @@ public class SensorController {
             public List<SensorValue<Double>> getValues() {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
+
+            @Override
+            public void addValue(SensorValue<Double> value) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
         };
     }
 }

@@ -61,6 +61,7 @@ public class TempSensor implements Sensor<Double> {
     /**
      * @param value the value to set
      */
+    @Override
     public void addValue(SensorValue<Double> value) {
         values.add(value);
     }
