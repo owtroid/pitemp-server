@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
 
 /**
@@ -71,9 +73,16 @@ public class TempSensorDAO implements SensorDAO {
         SensorReader sensorReader = new SensorReader();
         for (Sensor sensor : sensorReader.getSensors()) {
             if (sensors.containsKey(sensor.getId())) {
-                sensors.get(sensor.getId()).addValue(sensor.getLastValue());
+                //sensors.get(sensor.getId()).addValue(sensor.getLastValue());
             } else {
                 sensors.put(sensor.getId(), sensor);
+            }
+            
+            try {
+                /* Temporary for uploading to ThingSpeak, this needs to move */
+                new ThingSpeakHandler().update((double)sensor.getLastValue().getValue());
+            } catch (Exception ex) {
+                Logger.getLogger(TempSensorDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
